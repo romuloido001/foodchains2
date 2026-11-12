@@ -1,13 +1,9 @@
 /**
- * Google Apps Script — Grade 7 Food Chains lesson submissions
- *
- * Setup:
- * 1. Create a Google Sheet.
- * 2. Copy its spreadsheet ID into SPREADSHEET_ID below.
- * 3. Deploy this project as a Web App (execute as you; access as Anyone,
- *    if permitted by your school/Workspace administrator).
+ * GRADE 7 SCIENCE - FOOD CHAINS
+ * Receives learner activity and exit-ticket records and saves them to Google Sheets.
  */
 
+// Use ONLY the spreadsheet ID, not the full Google Sheets URL.
 const SPREADSHEET_ID = '1lTFV5ZMDo9eRYZtCNpS8YloEKh-tCGcH1emOMvkspYc';
 const SHEET_NAME = 'Food Chains Responses';
 
@@ -33,13 +29,35 @@ const HEADERS = [
   'Percentage'
 ];
 
+// Open the deployed /exec URL in a browser to test the web app.
+function doGet() {
+  return ContentService
+    .createTextOutput('Food Chains Google Sheets connection is ready.')
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
 function doPost(e) {
+  const lock = LockService.getScriptLock();
+  let lockAcquired = false;
+
   try {
-    if (!SPREADSHEET_ID || SPREADSHEET_ID === 'PASTE_SPREADSHEET_ID_HERE') {
-      throw new Error('Set SPREADSHEET_ID in Code.gs before deployment.');
+    if (!/^[a-zA-Z0-9_-]{20,}$/.test(SPREADSHEET_ID)) {
+      throw new Error('Invalid spreadsheet ID. Check SPREADSHEET_ID in Code.gs.');
     }
 
-    const data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    if (!e || !e.postData || !e.postData.contents) {
+      throw new Error('No learner data was received.');
+    }
+
+    const data = JSON.parse(e.postData.contents);
+    if (!data.learnerName) {
+      throw new Error('Learner name is missing.');
+    }
+
+    lock.waitLock(15000);
+    lockAcquired = true;
+
+    // Open the spreadsheet using the ID above, never the complete URL.
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
     let sheet = spreadsheet.getSheetByName(SHEET_NAME);
 
@@ -48,12 +66,13 @@ function doPost(e) {
     }
 
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
+      sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
       sheet.setFrozenRows(1);
+      sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     }
 
     const row = [
-      safeCell(data.submittedAt),
+      safeCell(data.submittedAt || new Date().toISOString()),
       safeCell(data.learnerName),
       safeCell(data.gradeSection),
       safeCell(data.lesson),
@@ -75,24 +94,26 @@ function doPost(e) {
     ];
 
     sheet.appendRow(row);
-    return jsonResponse({ success: true, message: 'Record saved.' });
+    SpreadsheetApp.flush();
+
+    return jsonResponse({ success: true, message: 'Learner record successfully saved.' });
   } catch (error) {
-    console.error(error);
-    return jsonResponse({ success: false, message: String(error) });
+    console.error('SAVE ERROR: ' + error.message);
+    return jsonResponse({ success: false, message: error.message });
+  } finally {
+    if (lockAcquired) lock.releaseLock();
   }
 }
 
-/**
- * Prevent spreadsheet formula injection from learner-entered text.
- */
+// Prevent learner-entered text from being interpreted as a spreadsheet formula.
 function safeCell(value) {
   if (value === null || value === undefined) return '';
-  const text = String(value).slice(0, 5000);
+  const text = String(value).substring(0, 5000);
   return /^[=+\-@]/.test(text) ? "'" + text : text;
 }
 
-function jsonResponse(payload) {
+function jsonResponse(data) {
   return ContentService
-    .createTextOutput(JSON.stringify(payload))
+    .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
 }

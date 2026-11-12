@@ -1,58 +1,59 @@
-# Food Chains — Grade 7 Interactive Science Lesson
+GRADE 7 SCIENCE — FOOD CHAINS INTERACTIVE LESSON
+Google Sheets data-saving package
 
-A self-contained interactive HTML lesson for Grade 7 learners. Learner responses and scores can be sent to a Google Sheet through Google Apps Script.
+FILES
+- index.html: Interactive learner lesson. Your latest supplied Apps Script /exec URL is already configured.
+- Code.gs: Corrected Google Apps Script receiver. The spreadsheet ID is already configured.
+- README.txt: Installation and publishing instructions.
 
-## Files
-- `index.html` — the interactive lesson, configured to send learner records to Google Sheets.
-- `Code.gs` — Google Apps Script web app code that receives submissions and appends them to a spreadsheet.
-- `README.txt` — setup and publishing instructions.
+YOUR GOOGLE SHEET
+Spreadsheet ID configured in Code.gs:
+1lTFV5ZMDo9eRYZtCNpS8YloEKh-tCGcH1emOMvkspYc
 
-## Part 1 — Create the Google Sheet
-1. Sign in to the Google account that will own the class records.
-2. Create a blank Google Sheet, for example **Grade 7 Food Chains Learning Records**.
-3. Copy the spreadsheet ID from its URL. It is the text between `/d/` and `/edit`.
+Spreadsheet URL:
+https://docs.google.com/spreadsheets/d/1lTFV5ZMDo9eRYZtCNpS8YloEKh-tCGcH1emOMvkspYc/edit
 
-## Part 2 — Install the Apps Script
-1. In the Google Sheet, select **Extensions → Apps Script**.
-2. Delete the sample code in the editor.
-3. Open `Code.gs` from this ZIP, copy all its contents, and paste them into the Apps Script editor.
-4. The supplied spreadsheet ID has already been inserted into `Code.gs`. If you use a different spreadsheet, replace the value of `SPREADSHEET_ID`.
-5. Click **Save**.
+IMPORTANT: Code.gs must contain ONLY the ID above in SPREADSHEET_ID, not the full URL.
 
-## Part 3 — Deploy as a Web App
-1. In Apps Script, click **Deploy → New deployment**.
-2. Click the gear icon and choose **Web app**.
-3. Set **Execute as** to **Me**.
-4. Set **Who has access** to **Anyone** (or the broadest access allowed by your Google Workspace administrator).
-5. Click **Deploy**, authorize the requested permissions, and finish deployment.
-6. Copy the Web app URL ending in `/exec`. Do not use the `/dev` test URL.
+PART 1 — INSTALL THE CORRECTED APPS SCRIPT
+1. Open the Google Sheet linked above.
+2. Select Extensions > Apps Script.
+3. Open Code.gs in the Apps Script editor.
+4. Delete the old code and paste the complete Code.gs included in this package.
+5. Click Save.
 
-## Part 4 — Google Apps Script URL
-The supplied Web App URL has already been inserted into `index.html`. If you redeploy the Apps Script and receive a new `/exec` URL, replace the value of `GOOGLE_SCRIPT_URL` in `index.html` with the new URL.
+PART 2 — REDEPLOY THE WEB APP
+1. In Apps Script, select Deploy > Manage deployments.
+2. Click the pencil (Edit) icon beside your existing Web App deployment.
+3. For Version, select New version.
+4. Set Execute as to Me.
+5. Set Who has access to Anyone, if allowed by your school Google Workspace administrator.
+6. Click Deploy and authorize access if prompted.
+7. The latest /exec URL you supplied is already inserted in index.html. If you deploy another new web app later, update GOOGLE_SCRIPT_URL in index.html.
 
-## Part 5 — Publish on GitHub Pages
-1. Upload the updated `index.html` and `README.txt` to the root of your GitHub repository.
-2. Keep `Code.gs` as a setup file in the repository if you want, but it is not required for the live website to run.
-3. In GitHub, open **Settings → Pages** and publish from branch `main`, folder `/ (root)`.
-4. Open the published website and submit a test learner record.
+If you create a completely new deployment and receive a different /exec URL, replace GOOGLE_SCRIPT_URL in index.html with that new URL before publishing.
 
-## What is stored in the Google Sheet?
-Each exit-ticket submission creates one row containing:
-- Submission date and time
-- Learner name and grade/section
-- Lesson name
-- Warm-up and activity responses
-- Exit-ticket answers and written responses
-- Score, total items, and percentage
+PART 3 — TEST THE APPS SCRIPT
+1. Open the existing Web App URL ending in /exec in a browser.
+2. You should see: Food Chains Google Sheets connection is ready.
+3. Open the website, enter a learner name and grade/section, complete the lesson, and submit the exit ticket.
+4. Open the Google Sheet and look for the Food Chains Responses tab and the new learner row.
 
-The sheet automatically creates a `Food Chains Responses` tab and adds a header row on the first submission.
+PART 4 — PUBLISH THE WEBSITE ON GITHUB PAGES
+1. Upload index.html to the root of your GitHub repository.
+2. You may also upload README.txt and Code.gs for your own reference. Code.gs runs in Google Apps Script, not GitHub Pages.
+3. In the repository, open Settings > Pages.
+4. Choose Deploy from a branch, select main and /(root), then Save.
+5. Open the published Pages website and test a learner submission.
 
-## Important privacy and classroom notes
-- The Web App URL is included in the public website. Anyone who can access the website may submit records to the connected sheet.
-- Anyone with the deployed endpoint can potentially send data to it. Do not store sensitive personal information or confidential grades in a publicly accessible endpoint.
-- Use a school-approved Google account and follow your school's learner-data privacy procedures. Limit access to the Google Sheet to authorized teachers.
-- The browser uses a `no-cors` request, so the page cannot verify the server's response. The on-page message means the request was sent, not that the row was independently confirmed. Check the Google Sheet after a test submission.
-- If your school Google Workspace does not allow public Web Apps, ask the administrator for an approved deployment/access method.
+WHAT IS SAVED
+The script stores the submission timestamp, learner name, grade and section, lesson, activity responses, exit-ticket responses, score, total items, and percentage in the Food Chains Responses sheet tab.
 
-## Run locally
-Open `index.html` in a modern browser. Internet access is required for Google Sheets saving. The interactive lesson and downloadable text report work locally.
+TROUBLESHOOTING
+- If you see "Illegal spreadsheet id or key", confirm SPREADSHEET_ID contains only the ID, not the complete URL.
+- If the sheet tab is not created, check Apps Script > Executions for the latest error. Also confirm that the Google account deploying the script has edit access to the spreadsheet.
+- Confirm that you deployed a New version after changing Code.gs.
+- The website currently sends the request using browser no-cors mode. It cannot read the Apps Script response, so an on-page sent message is not proof that a row was saved. Always verify in the Google Sheet and check Apps Script Executions if a row is missing.
+
+LEARNER DATA PRIVACY
+The Web App URL is present in the public website. Anyone who can access the site may attempt to submit data to the endpoint. Collect only information approved by your school, keep the spreadsheet restricted to authorized staff, and follow applicable learner-data privacy requirements.
