@@ -1,6 +1,14 @@
 GRADE 7 SCIENCE — FOOD CHAINS INTERACTIVE LESSON
 Google Sheets data-saving package
 
+PACKAGE CONTENTS
+- index.html: interactive learner lesson website.
+- Code.gs: Apps Script receiver that appends learner submissions to the response tab.
+- README.txt: setup, deployment, testing, and privacy instructions.
+
+IMPORTANT SPREADSHEET CHECK
+The Code.gs file uses the spreadsheet ID listed below from the previously supplied setup notes. The published /pubhtml link is a view-only publishing link and does not prove that it is the same editable spreadsheet. Before deployment, open the intended editable Google Sheet and confirm its ID matches. If it does not, replace SPREADSHEET_ID in Code.gs with the ID from the editable Sheet URL.
+
 FILES
 - index.html: Interactive learner lesson. Your latest supplied Apps Script /exec URL is already configured.
 - Code.gs: Corrected Google Apps Script receiver. The spreadsheet ID is already configured.

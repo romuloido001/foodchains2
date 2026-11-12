@@ -1,119 +1,60 @@
 /**
- * GRADE 7 SCIENCE - FOOD CHAINS
- * Receives learner activity and exit-ticket records and saves them to Google Sheets.
+ * Google Apps Script receiver for the Grade 7 Food Chains lesson.
+ * IMPORTANT: This is configured with the spreadsheet ID from the supplied README.
+ * Confirm that this is the intended editable spreadsheet before deployment.
  */
-
-// Use ONLY the spreadsheet ID, not the full Google Sheets URL.
 const SPREADSHEET_ID = '1lTFV5ZMDo9eRYZtCNpS8YloEKh-tCGcH1emOMvkspYc';
 const SHEET_NAME = 'Food Chains Responses';
-
 const HEADERS = [
-  'Submitted At',
-  'Learner Name',
-  'Grade & Section',
-  'Lesson',
-  'Warm-up',
-  'Activity 1',
-  'Activity 2',
-  'Activity 3 - Food Chain Order',
-  'Activity 4',
-  'Activity 5',
-  'Exit Ticket 1',
-  'Exit Ticket 2',
-  'Producer Answer',
-  'Why Plants Are Important',
-  'Local Food Chain',
-  'If One Organism Disappeared',
-  'Score',
-  'Total Items',
-  'Percentage'
+  'Submitted At', 'Learner Name', 'Grade & Section', 'Lesson',
+  'Warm-up', 'Activity 1', 'Activity 2', 'Activity 3', 'Activity 4', 'Activity 5',
+  'Exit Ticket 1', 'Exit Ticket 2', 'Producer Answer', 'Plant Importance',
+  'Local Food Chain', 'Organism Change', 'Score', 'Total Items', 'Percentage'
 ];
 
-// Open the deployed /exec URL in a browser to test the web app.
 function doGet() {
-  return ContentService
-    .createTextOutput('Food Chains Google Sheets connection is ready.')
+  return ContentService.createTextOutput('Food Chains Google Sheets connection is ready.')
     .setMimeType(ContentService.MimeType.TEXT);
 }
 
 function doPost(e) {
-  const lock = LockService.getScriptLock();
-  let lockAcquired = false;
-
   try {
-    if (!/^[a-zA-Z0-9_-]{20,}$/.test(SPREADSHEET_ID)) {
-      throw new Error('Invalid spreadsheet ID. Check SPREADSHEET_ID in Code.gs.');
-    }
-
     if (!e || !e.postData || !e.postData.contents) {
-      throw new Error('No learner data was received.');
+      throw new Error('No submission data received.');
     }
-
     const data = JSON.parse(e.postData.contents);
-    if (!data.learnerName) {
-      throw new Error('Learner name is missing.');
-    }
-
-    lock.waitLock(15000);
-    lockAcquired = true;
-
-    // Open the spreadsheet using the ID above, never the complete URL.
-    const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    let sheet = spreadsheet.getSheetByName(SHEET_NAME);
-
-    if (!sheet) {
-      sheet = spreadsheet.insertSheet(SHEET_NAME);
-    }
-
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    let sheet = ss.getSheetByName(SHEET_NAME);
+    if (!sheet) sheet = ss.insertSheet(SHEET_NAME);
     if (sheet.getLastRow() === 0) {
-      sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+      sheet.appendRow(HEADERS);
       sheet.setFrozenRows(1);
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     }
 
     const row = [
-      safeCell(data.submittedAt || new Date().toISOString()),
-      safeCell(data.learnerName),
-      safeCell(data.gradeSection),
-      safeCell(data.lesson),
-      safeCell(data.warmUp),
-      safeCell(data.activity1),
-      safeCell(data.activity2),
-      safeCell(data.activity3),
-      safeCell(data.activity4),
-      safeCell(data.activity5),
-      safeCell(data.exit1),
-      safeCell(data.exit2),
-      safeCell(data.producerAnswer),
-      safeCell(data.plantImportance),
-      safeCell(data.localFoodChain),
-      safeCell(data.organismChange),
-      safeCell(data.score),
-      safeCell(data.total),
-      safeCell(data.percentage)
+      safe_(data.submittedAt), safe_(data.learnerName), safe_(data.gradeSection), safe_(data.lesson),
+      safe_(data.warmUp), safe_(data.activity1), safe_(data.activity2), safe_(data.activity3),
+      safe_(data.activity4), safe_(data.activity5), safe_(data.exit1), safe_(data.exit2),
+      safe_(data.producerAnswer), safe_(data.plantImportance), safe_(data.localFoodChain),
+      safe_(data.organismChange), safe_(data.score), safe_(data.total), safe_(data.percentage)
     ];
-
     sheet.appendRow(row);
-    SpreadsheetApp.flush();
-
-    return jsonResponse({ success: true, message: 'Learner record successfully saved.' });
-  } catch (error) {
-    console.error('SAVE ERROR: ' + error.message);
-    return jsonResponse({ success: false, message: error.message });
-  } finally {
-    if (lockAcquired) lock.releaseLock();
+    return json_({ ok: true, message: 'Submission saved.' });
+  } catch (err) {
+    console.error(err);
+    return json_({ ok: false, error: String(err.message || err) });
   }
 }
 
-// Prevent learner-entered text from being interpreted as a spreadsheet formula.
-function safeCell(value) {
+// Prevent spreadsheet-formula injection from learner-entered text.
+function safe_(value) {
   if (value === null || value === undefined) return '';
-  const text = String(value).substring(0, 5000);
-  return /^[=+\-@]/.test(text) ? "'" + text : text;
+  const text = String(value).slice(0, 5000);
+  return /^[=+@]/.test(text) || /^-/.test(text) ? "'" + text : text;
 }
 
-function jsonResponse(data) {
-  return ContentService
-    .createTextOutput(JSON.stringify(data))
+function json_(value) {
+  return ContentService.createTextOutput(JSON.stringify(value))
     .setMimeType(ContentService.MimeType.JSON);
 }
