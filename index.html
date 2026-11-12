@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Food Chains | Grade 7 Interactive Science Lesson</title>
+<style>
+:root{--green:#176b45;--lime:#d9f2a6;--cream:#fffdf5;--ink:#18332a;--muted:#5b7168;--orange:#f4a340;--blue:#dff2ff;--line:#dce8df}
+*{box-sizing:border-box}body{margin:0;background:#f2f7f1;color:var(--ink);font:16px/1.55 "Trebuchet MS",Arial,sans-serif}
+header{background:linear-gradient(120deg,#124d38,#23865a);color:white;padding:30px 18px 38px}
+.wrap{max-width:1050px;margin:auto;padding:0 16px}.topline{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:#d7f4df;font-weight:bold}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;margin:8px 0}header p{max-width:720px;color:#e7f7e9}
+.pill{display:inline-block;background:#e7f6d3;color:#245a3e;border-radius:99px;padding:5px 12px;font-size:.8rem;font-weight:bold}
+main{padding:24px 0 60px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 5px 18px #1b59300c}
+h2{margin:0 0 12px;color:var(--green);font-size:1.45rem}h3{margin:12px 0 5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+label{font-weight:bold;display:block;margin:8px 0 4px}input,select{width:100%;padding:12px;border:1px solid #b9cfc0;border-radius:10px;font:inherit;background:#fff}
+button{border:0;border-radius:11px;padding:11px 16px;font:inherit;font-weight:bold;cursor:pointer;background:var(--green);color:white}
+button.secondary{background:#e8f3e9;color:var(--green);border:1px solid #c9dfce}button:hover{filter:brightness(.96)}
+.small{font-size:.9rem;color:var(--muted)}.callout{background:#f2f9e9;border-left:5px solid #8fbd52;padding:13px 16px;border-radius:10px}
+.visual{background:linear-gradient(135deg,#eff9e9,#e8f6ff);border-radius:14px;padding:12px;text-align:center;margin:12px 0}
+svg{max-width:100%;height:auto}.chain{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.organism{background:white;border:1px solid #c9ddce;border-radius:14px;padding:10px;min-width:105px;text-align:center;flex:1}
+.organism .emoji{font-size:2.2rem;display:block}.arrow{font-size:1.5rem;color:var(--green);font-weight:bold}
+.activity{border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0;background:#fcfefb}
+.option{display:block;border:1px solid #d5e4d8;border-radius:10px;padding:10px;margin:7px 0;cursor:pointer}.option input{width:auto;margin-right:8px}
+.feedback{margin-top:8px;font-weight:bold}.good{color:#147442}.bad{color:#a34a20}
+.progress{height:9px;background:#e5eee6;border-radius:20px;overflow:hidden;margin:10px 0}.bar{height:100%;width:0;background:#7ab84a;transition:width .3s}
+footer{text-align:center;color:var(--muted);padding:20px;font-size:.85rem}
+details{border:1px solid var(--line);padding:12px;border-radius:12px;margin:9px 0}summary{font-weight:bold;cursor:pointer;color:var(--green)}
+.result{background:#f4f9ff;border:1px solid #cfe2f2;padding:16px;border-radius:12px}.save-status{margin-top:10px;padding:10px 12px;border-radius:9px;background:#f2f7f1;color:#315b3e;font-size:.92rem}
+@media(max-width:600px){.card{padding:16px}.chain{gap:4px}.organism{min-width:78px;padding:7px}.arrow{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="topline">Grade 7 Science • Interactive learning journey</div>
+<h1>Food Chains</h1>
+<p>Follow the flow of energy in an ecosystem. Review what you already know, explore illustrated examples, and try short activities to check your understanding.</p>
+<span class="pill">Explore • Investigate • Practice • Reflect</span>
+</div></header>
+<main class="wrap">
+<section class="card" id="learner">
+<h2>👋 Welcome, young scientist!</h2>
+<p>Enter your details first. Your name will appear on your learning record when you download your results.</p>
+<div class="grid">
+<div><label for="learnerName">Learner's name</label><input id="learnerName" placeholder="e.g., Juan Dela Cruz" autocomplete="name"></div>
+<div><label for="section">Grade & section</label><input id="section" placeholder="e.g., Grade 7 - Mabini"></div>
+</div>
+<p class="small" id="welcome">Your progress is recorded on this page while you work.</p>
+</section>
+
+<section class="card">
+<h2>1. INTENTIONS — What will I learn?</h2>
+<p>At the end of this lesson, I can:</p>
+<ul><li>describe a food chain and explain how energy moves through it;</li><li>identify producers, consumers, and decomposers;</li><li>read arrows correctly in a food chain; and</li><li>predict what may happen when one organism in a food chain changes.</li></ul>
+<div class="callout"><b>Big idea:</b> All living things need energy. In most ecosystems, energy enters through sunlight and passes from one organism to another when organisms eat.</div>
+</section>
+
+<section class="card">
+<h2>2. LEARNING EXPERIENCE — Activate prior knowledge</h2>
+<h3>Think about what you already know</h3>
+<p>Have you seen a grasshopper eating grass, a frog catching an insect, or a bird eating a worm? These observations are clues about feeding relationships.</p>
+<div class="visual">
+<svg viewBox="0 0 720 190" role="img" aria-label="Sun shines on grass, a grasshopper, a frog and a snake">
+<circle cx="75" cy="45" r="27" fill="#ffd45c"/><g stroke="#f0b52c" stroke-width="5"><path d="M75 7V0M75 90v-8M37 45H25M125 45h-12M48 18l-9-9M103 72l9 9M103 18l9-9M48 72l-9 9"/></g>
+<path d="M0 155 Q180 135 360 155 T720 150V190H0Z" fill="#a7d889"/>
+<g font-size="48"><text x="150" y="140">🌱</text><text x="305" y="140">🦗</text><text x="455" y="140">🐸</text><text x="610" y="140">🐍</text></g>
+<g stroke="#176b45" stroke-width="4" fill="none"><path d="M215 112H285m-10-9 10 9-10 9"/><path d="M370 112H435m-10-9 10 9-10 9"/><path d="M520 112H590m-10-9 10 9-10 9"/></g>
+<g fill="#18332a" font-size="15" font-weight="bold"><text x="145" y="174">Grass</text><text x="296" y="174">Grasshopper</text><text x="467" y="174">Frog</text><text x="620" y="174">Snake</text></g>
+<text x="35" y="115" fill="#8b6a14" font-size="14">Sunlight</text>
+</svg>
+<p class="small">Look at the organisms. Which one makes its own food? Which organisms eat other organisms?</p>
+</div>
+<div class="activity">
+<b>Quick warm-up: choose the best answer.</b>
+<p>1. What is the main source of energy for most food chains?</p>
+<label class="option"><input type="radio" name="warm" value="a"> The Moon</label>
+<label class="option"><input type="radio" name="warm" value="b"> The Sun</label>
+<label class="option"><input type="radio" name="warm" value="c"> Soil</label>
+<button class="secondary" onclick="checkRadio('warm','b','warmFeedback','Correct! Sunlight is captured by plants and supports most food chains.','Not quite. Think about where plants get the energy to make food.')">Check answer</button>
+<div id="warmFeedback" class="feedback"></div>
+</div>
+</section>
+
+<section class="card">
+<h2>3. EXPLORE AND INVESTIGATE — What is a food chain?</h2>
+<p>A <b>food chain</b> is a simple model that shows how energy and nutrients pass from one living thing to another as organisms eat and are eaten.</p>
+<div class="visual">
+<h3>Example A: Grassland food chain</h3>
+<div class="chain">
+<div class="organism"><span class="emoji">🌿</span><b>Grass</b><br><small>Producer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🦗</span><b>Grasshopper</b><br><small>Primary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐸</span><b>Frog</b><br><small>Secondary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐍</span><b>Snake</b><br><small>Higher-level consumer</small></div>
+</div>
+<p class="small"><b>Arrow meaning:</b> The arrow points from the food to the organism that eats it. It shows the direction energy moves.</p>
+</div>
+<h3>Know the roles</h3>
+<div class="grid">
+<div class="activity"><span style="font-size:2rem">🌱</span><h3>Producer</h3>Usually a green plant or algae. It makes its own food using sunlight through photosynthesis.</div>
+<div class="activity"><span style="font-size:2rem">🐇</span><h3>Consumer</h3>An organism that gets energy by eating plants or other animals. Consumers may be herbivores, carnivores, or omnivores.</div>
+<div class="activity"><span style="font-size:2rem">🍄</span><h3>Decomposer</h3>Fungi and many bacteria break down dead organisms and wastes, returning nutrients to the environment.</div>
+</div>
+<div class="visual">
+<h3>Example B: Pond food chain</h3>
+<div class="chain">
+<div class="organism"><span class="emoji">🟢</span><b>Algae</b><br><small>Producer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🦐</span><b>Water flea</b><br><small>Primary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐟</span><b>Small fish</b><br><small>Secondary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐦</span><b>Kingfisher</b><br><small>Higher consumer</small></div>
+</div>
+<p class="small">Algae use sunlight. A tiny water animal eats algae, a fish eats the tiny animal, and a kingfisher may catch the fish.</p>
+</div>
+<div class="visual">
+<h3>Example C: Forest food chain</h3>
+<div class="chain">
+<div class="organism"><span class="emoji">🌳</span><b>Leaves</b><br><small>Producer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐛</span><b>Caterpillar</b><br><small>Primary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🐦</span><b>Small bird</b><br><small>Secondary consumer</small></div><span class="arrow">→</span>
+<div class="organism"><span class="emoji">🦅</span><b>Hawk</b><br><small>Higher consumer</small></div>
+</div>
+<p class="small">The chain begins with a plant. Energy is transferred as each organism eats the one before it.</p>
+</div>
+<details><summary>Why do food chains usually begin with producers?</summary>Producers such as plants and algae capture energy from sunlight and store it as chemical energy in food. Consumers depend directly or indirectly on producers for energy.</details>
+<details><summary>Do decomposers belong in food chains?</summary>Decomposers act on dead plants, animals, and wastes from every level. They recycle nutrients. They are often shown beside or at the end of a food-chain diagram, but nutrients—not energy—are recycled.</details>
+<details><summary>Does the arrow point to the predator or the prey?</summary>The arrow points to the organism receiving the energy—the eater. For example, grass → rabbit means the rabbit eats the grass.</details>
+</section>
+
+<section class="card">
+<h2>4. PRACTICE — Check your understanding</h2>
+<div class="activity" id="q1"><b>Activity 1. Identify the role</b><p>In the chain grass → rabbit → fox, what is the role of the grass?</p>
+<label class="option"><input type="radio" name="q1" value="a"> Producer</label><label class="option"><input type="radio" name="q1" value="b"> Primary consumer</label><label class="option"><input type="radio" name="q1" value="c"> Decomposer</label>
+<button class="secondary" onclick="grade('q1','a','f1','Correct! Grass makes its own food, so it is a producer.','Review the roles: plants that make their own food are producers.')">Check</button><div id="f1" class="feedback"></div></div>
+
+<div class="activity" id="q2"><b>Activity 2. Follow the energy</b><p>Which arrow correctly shows the relationship if a rabbit eats grass?</p>
+<label class="option"><input type="radio" name="q2" value="a"> Rabbit → Grass</label><label class="option"><input type="radio" name="q2" value="b"> Grass → Rabbit</label>
+<button class="secondary" onclick="grade('q2','b','f2','Correct! The arrow points from the food to the eater.','Remember: the arrow shows where energy goes—from food to eater.')">Check</button><div id="f2" class="feedback"></div></div>
+
+<div class="activity" id="q3"><b>Activity 3. Build a food chain</b><p>Choose the correct order for a simple rice-field food chain.</p>
+<div class="grid"><div><label for="order1">First</label><select id="order1"><option value="">Choose</option><option>Snake</option><option>Rice plant</option><option>Rat</option></select></div><div><label for="order2">Second</label><select id="order2"><option value="">Choose</option><option>Snake</option><option>Rice plant</option><option>Rat</option></select></div><div><label for="order3">Third</label><select id="order3"><option value="">Choose</option><option>Snake</option><option>Rice plant</option><option>Rat</option></select></div></div>
+<button class="secondary" onclick="checkOrder()">Check order</button><div id="f3" class="feedback"></div>
+<p class="small">Hint: A rat may eat rice, and a snake may eat a rat.</p></div>
+
+<div class="activity" id="q4"><b>Activity 4. Think like an ecologist</b><p>What could happen if the number of frogs in the grassland chain decreases?</p>
+<label class="option"><input type="radio" name="q4" value="a"> Grasshoppers may increase because fewer frogs eat them.</label><label class="option"><input type="radio" name="q4" value="b"> Grasshoppers will all disappear.</label><label class="option"><input type="radio" name="q4" value="c"> The Sun will stop shining.</label>
+<button class="secondary" onclick="grade('q4','a','f4','Correct! With fewer frogs as predators, grasshopper numbers may rise, which can affect grass. Ecosystems are connected.','Think about which organism eats the grasshopper. What happens when there are fewer predators?')">Check</button><div id="f4" class="feedback"></div></div>
+
+<div class="activity" id="q5"><b>Activity 5. True or false?</b><p>Decomposers help return nutrients to the environment.</p>
+<label class="option"><input type="radio" name="q5" value="true"> True</label><label class="option"><input type="radio" name="q5" value="false"> False</label>
+<button class="secondary" onclick="grade('q5','true','f5','Correct! Decomposers break down dead matter and recycle nutrients.','That statement is true. Decomposers break down dead matter and wastes.')">Check</button><div id="f5" class="feedback"></div></div>
+</section>
+
+<section class="card">
+<h2>5. ASSESSING LEARNING — Exit ticket</h2>
+<p>Answer these final questions. Your score and responses will be included in your downloadable learning record.</p>
+<div class="activity"><b>1. What does an arrow in a food chain represent?</b>
+<label class="option"><input type="radio" name="e1" value="a"> The direction energy moves</label><label class="option"><input type="radio" name="e1" value="b"> The animal's direction of travel</label><label class="option"><input type="radio" name="e1" value="c"> The size of an organism</label></div>
+<div class="activity"><b>2. Which organism is a decomposer?</b>
+<label class="option"><input type="radio" name="e2" value="a"> Grass</label><label class="option"><input type="radio" name="e2" value="b"> Mushroom</label><label class="option"><input type="radio" name="e2" value="c"> Eagle</label></div>
+<div class="activity"><b>3. Give one example of a producer.</b><input id="producerAnswer" placeholder="Type your answer"></div>
+<div class="activity"><b>4. Why are plants important in most food chains?</b><textarea id="reflection" rows="3" style="width:100%;padding:12px;border:1px solid #b9cfc0;border-radius:10px;font:inherit" placeholder="Write your answer here..."></textarea></div>
+<button onclick="finishLesson()">Submit exit ticket, calculate score & save to Google Sheets</button>
+<div id="finalResult" class="result" style="display:none;margin-top:15px"></div>
+ <div id="saveStatus" class="save-status" role="status" aria-live="polite">Your result will be saved to the class Google Sheet when you submit the exit ticket.</div>
+</section>
+
+<section class="card">
+<h2>6. WAYS FORWARD — Connect it to your community</h2>
+<p>Look around your home, school, garden, or nearby field. Draw or write one possible food chain using at least three organisms. Label the producer and consumers. Make sure every arrow points from the food to the eater.</p>
+<div class="activity"><label for="localChain">My local food chain</label><textarea id="localChain" rows="3" placeholder="Example: grass → grasshopper → bird"></textarea>
+<label for="reflection2">What might happen if one organism disappeared?</label><textarea id="reflection2" rows="3" placeholder="I think... because..."></textarea></div>
+<p class="callout"><b>Remember:</b> Food chains are simplified models. In nature, many food chains connect to form a food web.</p>
+<button class="secondary" onclick="downloadReport()">⬇ Download my learning record</button>
+<p class="small">Your file will be named using the learner's name. Complete the exit ticket first for a full report.</p>
+</section>
+</main>
+<footer>Grade 7 Science • Food Chains • Learning through observation and inquiry</footer>
+<script>
+const answers={q1:'a',q2:'b',q4:'a',q5:'true',e1:'a',e2:'b'};
+const feedback={};
+
+// IMPORTANT: Paste your deployed Google Apps Script Web App URL between the quotes.
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTdmWFai1xkw1EWgLOOfqBtCCohqIph9c09S_L2TpHKZ96BAXQ1KwsdTHBOp5yav4u/exec";
+
+function getSelected(name){
+ const selected=document.querySelector('input[name="'+name+'"]:checked');
+ return selected ? selected.value : '';
+}
+function buildLessonRecord(){
+ const name=learner();
+ const section=document.getElementById('section').value.trim();
+ const selected=n=>getSelected(n)||'No response';
+ const score=window.lessonScore ? window.lessonScore.score : '';
+ const total=window.lessonScore ? window.lessonScore.total : '';
+ return {
+  submittedAt:new Date().toISOString(),
+  learnerName:name,
+  gradeSection:section,
+  lesson:'Food Chains',
+  warmUp:selected('warm'),
+  activity1:selected('q1'),
+  activity2:selected('q2'),
+  activity3:['order1','order2','order3'].map(x=>document.getElementById(x).value||'No response').join(' → '),
+  activity4:selected('q4'),
+  activity5:selected('q5'),
+  exit1:selected('e1'),
+  exit2:selected('e2'),
+  producerAnswer:document.getElementById('producerAnswer').value.trim(),
+  plantImportance:document.getElementById('reflection').value.trim(),
+  localFoodChain:document.getElementById('localChain').value.trim(),
+  organismChange:document.getElementById('reflection2').value.trim(),
+  score:score,
+  total:total,
+  percentage:total ? Math.round(score/total*100) : ''
+ };
+}
+async function saveToGoogleSheet(){
+ const status=document.getElementById('saveStatus');
+ if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('PASTE_YOUR_')){
+  status.textContent='Your score is calculated, but Google Sheets is not connected yet. Add your deployed Apps Script Web App URL in the HTML file.';
+  return;
+ }
+ status.textContent='Sending your learning record to the class Google Sheet…';
+ try{
+  // no-cors is used because Apps Script Web Apps do not provide browser-readable CORS responses.
+  await fetch(GOOGLE_SCRIPT_URL,{
+   method:'POST',
+   mode:'no-cors',
+   headers:{'Content-Type':'text/plain;charset=utf-8'},
+   body:JSON.stringify(buildLessonRecord())
+  });
+  status.textContent='Your record has been sent to Google Sheets. Please ask your teacher to verify that it appears in the class sheet.';
+ }catch(error){
+  status.textContent='The record could not be sent. Check your internet connection or ask your teacher to verify the Apps Script deployment URL.';
+  console.error('Google Sheets save error:',error);
+ }
+}
+function learner(){return document.getElementById('learnerName').value.trim()||'Learner'}
+function grade(q,correct,id,good,bad){
+ const selected=document.querySelector('input[name="'+q+'"]:checked');
+ const el=document.getElementById(id);
+ if(!selected){el.textContent='Please choose an answer first.';el.className='feedback bad';return}
+ const ok=selected.value===correct;feedback[q]=ok;
+ el.textContent=ok?good:bad;el.className='feedback '+(ok?'good':'bad');
+}
+function checkRadio(name,correct,id,good,bad){grade(name,correct,id,good,bad)}
+function checkOrder(){
+ const vals=['order1','order2','order3'].map(x=>document.getElementById(x).value);
+ const ok=vals.join('|')==='Rice plant|Rat|Snake';feedback.q3=ok;
+ const el=document.getElementById('f3');el.textContent=ok?'Correct! Rice plant → rat → snake.': 'Try again. Start with the producer, then the animal that eats it, then its predator.';el.className='feedback '+(ok?'good':'bad');
+}
+function finishLesson(){
+ ['e1','e2'].forEach((q,i)=>{const s=document.querySelector('input[name="'+q+'"]:checked');feedback[q]=!!s&&s.value===answers[q]});
+ const score=['q1','q2','q3','q4','q5','e1','e2'].filter(q=>feedback[q]===true).length;
+ const total=7;const name=learner();
+ const r=document.getElementById('finalResult');r.style.display='block';
+ r.innerHTML='<h3>Learning record for '+escapeHtml(name)+'</h3><p><b>Score: '+score+' / '+total+'</b> ('+Math.round(score/total*100)+'%)</p><p>'+ (score>=6?'Excellent work! You understand the key ideas.':score>=4?'Good effort! Review the examples and try again.':'Keep practicing. Revisit the producer, consumer, decomposer roles and arrow direction.')+'</p><p class="small">Remember to download your learning record below.</p>';
+ window.lessonScore={score,total};
+  saveToGoogleSheet();
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function downloadReport(){
+ const name=learner(),section=document.getElementById('section').value.trim()||'Not provided';
+ const score=window.lessonScore?window.lessonScore.score+' / '+window.lessonScore.total:'Exit ticket not yet submitted';
+ const selected=n=>{const x=document.querySelector('input[name="'+n+'"]:checked');return x?x.value:'No response'};
+ const lines=[
+ 'FOOD CHAINS - GRADE 7 SCIENCE LEARNING RECORD','Learner: '+name,'Grade & Section: '+section,
+ 'Date: '+new Date().toLocaleDateString(),'Activity results:',
+ 'Warm-up: '+selected('warm'),'Activity 1 - role of grass: '+selected('q1'),
+ 'Activity 2 - arrow direction: '+selected('q2'),
+ 'Activity 3 - food chain order: '+['order1','order2','order3'].map(x=>document.getElementById(x).value||'No response').join(' → '),
+ 'Activity 4 - fewer frogs: '+selected('q4'),'Activity 5 - decomposers: '+selected('q5'),
+ 'Exit ticket score: '+score,'Exit 1 - arrow meaning: '+selected('e1'),
+ 'Exit 2 - decomposer: '+selected('e2'),
+ 'Example of a producer: '+(document.getElementById('producerAnswer').value||'No response'),
+ 'Why plants are important: '+(document.getElementById('reflection').value||'No response'),
+ 'My local food chain: '+(document.getElementById('localChain').value||'No response'),
+ 'If one organism disappeared: '+(document.getElementById('reflection2').value||'No response'),
+ 'Teacher/parent note: Review any unanswered or incorrect activities.'
+ ];
+ const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ const safe=name.normalize('NFKD').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'')||'Learner';
+ a.download=safe+'_Food_Chains_Learning_Record.txt';a.click();URL.revokeObjectURL(a.href);
+}
+document.getElementById('learnerName').addEventListener('input',()=>{document.getElementById('welcome').textContent='Welcome, '+learner()+'! Your progress is recorded on this page while you work.'});
+</script>
+</body></html>
