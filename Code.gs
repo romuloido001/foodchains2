@@ -8,7 +8,7 @@
  *    if permitted by your school/Workspace administrator).
  */
 
-const SPREADSHEET_ID = 'PASTE_SPREADSHEET_ID_HERE';
+const SPREADSHEET_ID = '1lTFV5ZMDo9eRYZtCNpS8YloEKh-tCGcH1emOMvkspYc';
 const SHEET_NAME = 'Food Chains Responses';
 
 const HEADERS = [

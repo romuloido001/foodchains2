@@ -16,7 +16,7 @@ A self-contained interactive HTML lesson for Grade 7 learners. Learner responses
 1. In the Google Sheet, select **Extensions → Apps Script**.
 2. Delete the sample code in the editor.
 3. Open `Code.gs` from this ZIP, copy all its contents, and paste them into the Apps Script editor.
-4. In the code, replace `PASTE_SPREADSHEET_ID_HERE` with the spreadsheet ID copied in Part 1.
+4. The supplied spreadsheet ID has already been inserted into `Code.gs`. If you use a different spreadsheet, replace the value of `SPREADSHEET_ID`.
 5. Click **Save**.
 
 ## Part 3 — Deploy as a Web App
